@@ -19,7 +19,6 @@ export class SetController {
     return this.setService.getAllSets(user);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('/:id')
   getSpecificSet(@Param() params) {
     return this.setService.getSpecificSet(params.id);
