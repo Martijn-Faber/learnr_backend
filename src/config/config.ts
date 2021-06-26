@@ -11,8 +11,15 @@ const SERVER = {
   prefix: SERVER_PREFIX,
 };
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
+const JWT = {
+  secret: JWT_SECRET,
+};
+
 const config = {
   server: SERVER,
+  jwt: JWT,
 };
 
 export default config;
