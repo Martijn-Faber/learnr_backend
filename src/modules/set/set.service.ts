@@ -19,4 +19,17 @@ export class SetService extends Logger {
 
     return set;
   }
+
+  async getAllSets(user) {
+    const sets = await this.prisma.user.findUnique({
+      where: {
+        id: user.id,
+      },
+      select: {
+        sets: true,
+      },
+    });
+
+    return sets.sets;
+  }
 }
