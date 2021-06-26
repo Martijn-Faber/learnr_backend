@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { SetService } from './set.service';
@@ -36,5 +37,11 @@ export class SetController {
   @Delete('/:id')
   deleteSet(@User() user, @Param() params) {
     return this.setService.deleteSet(user, params.id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('/:id')
+  updateSet(@User() user, @Param() params, @Body() body) {
+    return this.setService.updateSet(user, params.id, body);
   }
 }

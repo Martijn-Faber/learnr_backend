@@ -1,6 +1,7 @@
 import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateSetDto } from './dto/create-set.dto';
+import { UpdateSetDto } from './dto/update-set.dto';
 
 @Injectable()
 export class SetService extends Logger {
@@ -67,6 +68,38 @@ export class SetService extends Logger {
 
     return {
       message: `set ${set.id} succesfully deleted`,
+    };
+  }
+
+  async updateSet(user, setId: string, body: UpdateSetDto) {
+    const { title, description } = body;
+
+    const set = await this.prisma.set.findFirst({
+      where: {
+        id: setId,
+        authorId: user.id,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!set) {
+      throw new HttpException(`cannot find set ${setId}`, HttpStatus.NOT_FOUND);
+    }
+
+    await this.prisma.set.update({
+      where: {
+        id: set.id,
+      },
+      data: {
+        title,
+        description,
+      },
+    });
+
+    return {
+      message: `set ${set.id} succesfully updated`,
     };
   }
 }
