@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateSetDto } from './dto/create-set.dto';
 
@@ -37,6 +37,10 @@ export class SetService extends Logger {
       },
     });
 
+    if (!set) {
+      throw new HttpException(`cannot find set ${setId}`, HttpStatus.NOT_FOUND);
+    }
+
     return set;
   }
 
@@ -50,6 +54,10 @@ export class SetService extends Logger {
         id: true,
       },
     });
+
+    if (!set) {
+      throw new HttpException(`cannot find set ${setId}`, HttpStatus.NOT_FOUND);
+    }
 
     await this.prisma.set.delete({
       where: {
