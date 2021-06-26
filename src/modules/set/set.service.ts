@@ -39,4 +39,26 @@ export class SetService extends Logger {
 
     return set;
   }
+
+  async deleteSpecificSet(user, setId: string) {
+    const set = await this.prisma.set.findFirst({
+      where: {
+        id: setId,
+        authorId: user.id,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    await this.prisma.set.delete({
+      where: {
+        id: set.id,
+      },
+    });
+
+    return {
+      message: `set ${set.id} succesfully deleted`,
+    };
+  }
 }
