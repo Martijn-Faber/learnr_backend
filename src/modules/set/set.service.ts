@@ -21,15 +21,12 @@ export class SetService extends Logger {
   }
 
   async getAllSets(user) {
-    const sets = await this.prisma.user.findUnique({
+    const sets = await this.prisma.set.findMany({
       where: {
-        id: user.id,
-      },
-      select: {
-        sets: true,
+        authorId: user.id,
       },
     });
 
-    return sets.sets;
+    return sets;
   }
 }
