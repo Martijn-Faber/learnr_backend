@@ -20,7 +20,7 @@ export class SetService extends Logger {
     return set;
   }
 
-  async getAllSets(user) {
+  async getSets(user) {
     const sets = await this.prisma.set.findMany({
       where: {
         authorId: user.id,
@@ -30,7 +30,7 @@ export class SetService extends Logger {
     return sets;
   }
 
-  async getSpecificSet(setId: string) {
+  async getSet(setId: string) {
     const set = await this.prisma.set.findUnique({
       where: {
         id: setId,
@@ -44,7 +44,7 @@ export class SetService extends Logger {
     return set;
   }
 
-  async deleteSpecificSet(user, setId: string) {
+  async deleteSet(user, setId: string) {
     const set = await this.prisma.set.findFirst({
       where: {
         id: setId,

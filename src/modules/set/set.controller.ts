@@ -23,18 +23,18 @@ export class SetController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  getAllSets(@User() user) {
-    return this.setService.getAllSets(user);
+  getSets(@User() user) {
+    return this.setService.getSets(user);
   }
 
   @Get('/:id')
-  getSpecificSet(@Param() params) {
-    return this.setService.getSpecificSet(params.id);
+  getSet(@Param() params) {
+    return this.setService.getSet(params.id);
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete('/:id')
-  deleteSpecificSet(@User() user, @Param() params) {
-    return this.setService.deleteSpecificSet(user, params.id);
+  deleteSet(@User() user, @Param() params) {
+    return this.setService.deleteSet(user, params.id);
   }
 }
