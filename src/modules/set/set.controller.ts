@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { SetService } from './set.service';
 import { User } from '@/decorators/user.decorator';
 import { JwtAuthGuard } from '@/guards/jwt-auth.guard';
@@ -17,5 +17,11 @@ export class SetController {
   @Get()
   getAllSets(@User() user) {
     return this.setService.getAllSets(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/:id')
+  getSpecificSet(@Param() params) {
+    return this.setService.getSpecificSet(params.id);
   }
 }

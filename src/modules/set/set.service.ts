@@ -29,4 +29,14 @@ export class SetService extends Logger {
 
     return sets;
   }
+
+  async getSpecificSet(setId: string) {
+    const set = await this.prisma.set.findUnique({
+      where: {
+        id: setId,
+      },
+    });
+
+    return set;
+  }
 }
