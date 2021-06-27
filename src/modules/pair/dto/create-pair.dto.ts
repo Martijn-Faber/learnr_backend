@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsDefined } from 'class-validator';
+import { IsString, IsDefined } from 'class-validator';
 export class CreatePairDto {
   @IsString()
   @IsDefined()

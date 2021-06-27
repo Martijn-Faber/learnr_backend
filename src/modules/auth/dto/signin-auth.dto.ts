@@ -1,5 +1,4 @@
 import { IsEmail, IsString, IsDefined } from 'class-validator';
-
 export class SignInDto {
   @IsString()
   @IsDefined()
