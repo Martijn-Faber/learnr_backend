@@ -55,4 +55,10 @@ export class SetController {
   createPair(@Param() params, @Body() body: CreatePairDto) {
     return this.pairService.createPair(params.id, body);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/:id/pairs/:pairId')
+  deletePair(@User() user, @Param() params) {
+    return this.pairService.deletePair(user, params.id, params.pairId);
+  }
 }

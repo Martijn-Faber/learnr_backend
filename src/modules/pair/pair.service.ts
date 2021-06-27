@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaService } from '@/modules/prisma/prisma.service';
 import { CreatePairDto } from './dto/create-pair.dto';
 
@@ -8,9 +8,8 @@ export class PairService extends Logger {
     super();
   }
 
-  async createPair(setId, body: CreatePairDto) {
+  async createPair(setId: string, body: CreatePairDto) {
     const { term, definition } = body;
-    console.log(term, definition);
     const pair = await this.prisma.pair.create({
       data: {
         term,
@@ -20,5 +19,34 @@ export class PairService extends Logger {
     });
 
     return pair;
+  }
+
+  async deletePair(user, setId: string, pairId: string) {
+    const pair = await this.prisma.pair.findFirst({
+      where: {
+        id: pairId,
+        setId,
+        set: {
+          authorId: user.id,
+        },
+      },
+    });
+
+    if (!pair) {
+      throw new HttpException(
+        `cannot find pair ${pairId}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    await this.prisma.pair.delete({
+      where: {
+        id: pair.id,
+      },
+    });
+
+    return {
+      message: `set ${pair.id} succesfully deleted`,
+    };
   }
 }
