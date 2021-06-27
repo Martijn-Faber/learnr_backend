@@ -13,4 +13,10 @@ export class UserController extends Logger {
   getUser(@Param() params) {
     return this.userService.getUser(params.id);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/:id/sets')
+  getUserSets(@Param() params) {
+    return this.userService.getUserSets(params.id);
+  }
 }

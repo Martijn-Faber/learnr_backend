@@ -30,4 +30,24 @@ export class UserService extends Logger {
 
     return user;
   }
+
+  async getUserSets(userId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        sets: true,
+      },
+    });
+
+    if (!user) {
+      throw new HttpException(
+        `cannot find user ${userId}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return user.sets;
+  }
 }
