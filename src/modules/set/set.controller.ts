@@ -11,10 +11,15 @@ import {
 import { SetService } from './set.service';
 import { User } from '@/decorators/user.decorator';
 import { JwtAuthGuard } from '@/guards/jwt-auth.guard';
+import { PairService } from '@/modules/pair/pair.service';
+import { CreatePairDto } from '@/modules/pair/dto/create-pair.dto';
 
 @Controller('sets')
 export class SetController {
-  constructor(private setService: SetService) {}
+  constructor(
+    private setService: SetService,
+    private pairService: PairService,
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
@@ -43,5 +48,11 @@ export class SetController {
   @Put('/:id')
   updateSet(@User() user, @Param() params, @Body() body) {
     return this.setService.updateSet(user, params.id, body);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/:id/pairs')
+  createPair(@Param() params, @Body() body: CreatePairDto) {
+    return this.pairService.createPair(params.id, body);
   }
 }

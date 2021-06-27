@@ -36,6 +36,9 @@ export class SetService extends Logger {
       where: {
         id: setId,
       },
+      include: {
+        pairs: true,
+      },
     });
 
     if (!set) {
