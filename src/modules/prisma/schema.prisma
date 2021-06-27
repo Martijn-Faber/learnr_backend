@@ -31,23 +31,9 @@ model Set {
 }
 
 model Pair {
-  id          String       @id @default(uuid())
-  terms       Term[]
-  definitions Definition[]
-  Set         Set?         @relation(fields: [setId], references: [id])
-  setId       String?
-}
-
-model Term {
-  id     String  @id @default(uuid())
-  term   String
-  Pair   Pair?   @relation(fields: [pairId], references: [id])
-  pairId String?
-}
-
-model Definition {
   id         String  @id @default(uuid())
+  term       String
   definition String
-  Pair       Pair?   @relation(fields: [pairId], references: [id])
-  pairId     String?
+  Set        Set?    @relation(fields: [setId], references: [id])
+  setId      String?
 }
