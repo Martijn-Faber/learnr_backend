@@ -6,6 +6,7 @@ import { ResponseInterceptor } from '@/filters/response.interceptor';
 import { Logger } from '@/utils/logger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const logger = new Logger('server');
@@ -18,6 +19,7 @@ async function bootstrap() {
   app.setGlobalPrefix(config.server.prefix);
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new ResponseInterceptor());
+  app.useGlobalPipes(new ValidationPipe());
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Learnr docs')
