@@ -26,6 +26,19 @@ export class SetService extends Logger {
       where: {
         authorId: user.id,
       },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     return sets;
@@ -36,8 +49,26 @@ export class SetService extends Logger {
       where: {
         id: setId,
       },
-      include: {
-        pairs: true,
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        pairs: {
+          select: {
+            id: true,
+            term: true,
+            definition: true,
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
       },
     });
 

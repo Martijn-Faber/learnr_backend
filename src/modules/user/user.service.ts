@@ -37,7 +37,20 @@ export class UserService extends Logger {
         id: userId,
       },
       select: {
-        sets: true,
+        sets: {
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            author: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+              },
+            },
+          },
+        },
       },
     });
 
